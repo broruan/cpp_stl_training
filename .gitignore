@@ -1,0 +1,6 @@
+build*/
+.tools/
+.deps/
+.validation/
+*.zip
+
