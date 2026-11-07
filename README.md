@@ -49,11 +49,11 @@
 
 ### 通用命令 / Visual Studio 开发者终端
 
-在项目根目录运行：
+在项目根目录运行(无特殊情况测试的时候只需要运行下面的三行命令就行，这是在题目全部完成后)：
 
 ```sh
-cmake -S . -B build
-cmake --build build --config Debug --parallel 4
+mkdir ./build && cd ./build && cmake ..
+cd .. && make
 ctest --test-dir build -C Debug --output-on-failure
 ```
 
@@ -67,20 +67,15 @@ ctest --test-dir build-ninja --output-on-failure
 
 切换编译器或生成器时使用新的构建目录。Windows 使用 MinGW 时，也需将它的 `bin` 目录放在 PATH 中，以便运行测试程序。
 
-### 只运行某一题
+### 只运行某一题（如果想看其中一道题的测试结果）
 
-以第 1 题、第 5 题为例；使用其他构建目录时相应替换 `build`：
+以第 1 题、第 5 题为例：
 
 ```sh
 ctest --test-dir build -C Debug -R "^Ex01Templates\." --output-on-failure
 ctest --test-dir build -C Debug -R "^Ex05Tasks\." --output-on-failure
 ```
-
-也可以直接使用 GoogleTest 的过滤器。Ninja/Makefile 构建的 Windows 示例：
-
-```powershell
-.\build\homework_tests.exe --gtest_filter="Ex03Brackets.*"
-```
+> **注意**：``-R "^xxx\."`` xxx填写/tests目录下的源文件中的TEST()的第一个参数
 
 Visual Studio 构建通常将程序放在 `build/Debug/homework_tests.exe`。优先用上面的 CTest 命令即可避开路径差异。
 
